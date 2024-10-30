@@ -6,7 +6,7 @@ list=($(ls ./geoip | sed 's/geoip_//g' | sed 's/\.txt//g'))
 for ((i = 0; i < ${#list[@]}; i++)); do
 	sed -i 's/^/        "/g' ./geoip/geoip_${list[i]}.txt
 	sed -i 's/$/",/g' ./geoip/geoip_${list[i]}.txt
-	sed -i '1s/^/{\n  "version": 1,\n  "rules": [\n    {\n      "ip_cidr": [\n/g' ./geoip/geoip_${list[i]}.txt
+	sed -i '1s/^/{\n  "version": 2,\n  "rules": [\n    {\n      "ip_cidr": [\n/g' ./geoip/geoip_${list[i]}.txt
 	sed -i '$ s/,$/\n      ]\n    }\n  ]\n}/g' ./geoip/geoip_${list[i]}.txt
 	mv ./geoip/geoip_${list[i]}.txt ./geoip/${list[i]}.json
 	./sing-box rule-set compile "./geoip/${list[i]}.json" -o ./geoip/${list[i]}.srs
